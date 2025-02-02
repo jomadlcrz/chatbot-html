@@ -10,21 +10,11 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body, html { height: 100%; font-family: Arial, sans-serif; }
 
-        /* Restored Thin Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 3px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #007bff;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background-color: #f5f5f5;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #0056b3;
-        }
+        /* Thin Scrollbar Styling */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-thumb { background-color: #007bff; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background-color: #f5f5f5; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background-color: #0056b3; }
 
         .header {
             display: flex; align-items: center; justify-content: center;
@@ -47,7 +37,7 @@
         }
         .user-message { background: #f1f1f1; margin-left: auto; }
         .bot-message { background: none; margin-right: auto; }
-        .welcome-message { 
+        .welcome-message {
             color: #00796b; border-radius: 8px; padding: 20px;
             margin: 15px; font-weight: bold; font-size: 24px;
             text-align: center;
@@ -59,14 +49,24 @@
             100% { background-position: 2000% 0; }
         }
         .thinking-message {
-            background: linear-gradient(90deg, #007bff 25%, #66aaff 50%, #007bff 75%);
+            background: linear-gradient(90deg, 
+                #007bff 25%, 
+                #66aaff 50%, 
+                #007bff 75%, 
+                #66aaff 100%
+            );
             background-size: 200% 100%;
-            animation: shimmer 2s infinite linear;
+            animation: shimmer 4s infinite linear;
             padding: 10px;
             border-radius: 8px;
-            font-style: italic;
-            color: white;
             max-width: 80%;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            display: inline-block;
+            color: #00796b;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
         }
 
         .input-area {
@@ -123,8 +123,10 @@
         const apiUrl = "https://gpt-api-bay.vercel.app/chat";
         const md = new markdownit();
         let conversationHistory = [];
+        let welcomeMessageDisplayed = false;
 
         const addMessage = (content, sender) => {
+            if (welcomeMessageDisplayed) removeWelcomeMessage();
             let msg = document.createElement('div');
             msg.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
             msg.innerHTML = sender === 'user' ? content : md.render(content);
@@ -138,6 +140,15 @@
             welcomeMsg.innerHTML = "Hi, I'm <span>AI ChatBot</span>.<br>How can I help you today?";
             chatBox.appendChild(welcomeMsg);
             chatBox.scrollTop = chatBox.scrollHeight;
+            welcomeMessageDisplayed = true;
+        };
+
+        const removeWelcomeMessage = () => {
+            const welcomeMessage = document.querySelector('.welcome-message');
+            if (welcomeMessage) {
+                welcomeMessage.remove();
+                welcomeMessageDisplayed = false;
+            }
         };
 
         const sendMessage = async () => {
@@ -152,7 +163,7 @@
 
             const thinkingMessage = document.createElement('div');
             thinkingMessage.classList.add('message', 'thinking-message');
-            thinkingMessage.textContent = "Thinking...";
+            thinkingMessage.textContent = "Thinking... 💬";
             chatBox.appendChild(thinkingMessage);
             chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -164,21 +175,12 @@
                 });
 
                 const data = await response.json();
-                console.log("API Response:", data);
-
                 thinkingMessage.remove();
 
-                let botResponse = "Unexpected response format.";
-                if (data?.choices && data.choices.length > 0) {
-                    botResponse = data.choices[0]?.message?.content || "No response content.";
-                } else if (data?.response) { 
-                    botResponse = data.response; 
-                }
-
+                let botResponse = data?.response || "Unexpected response format.";
                 addMessage(botResponse, 'bot');
                 conversationHistory.push({ role: "assistant", content: botResponse });
             } catch (error) {
-                console.error("API Error:", error);
                 thinkingMessage.remove();
                 addMessage("Error: Could not reach AI service.", 'bot');
             }
