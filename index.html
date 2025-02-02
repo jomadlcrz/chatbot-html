@@ -2,272 +2,205 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AI Chatbot</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Disable scrolling */
-        body {
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            
-        }
-        /* Fixed chat container */
-        .chat-container {
-            width: 400px;
-            height: 600px;
-            background: white;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-        }
-        /* Fixed header */
-        .chat-header {
-            text-align: center;
-            font-weight: bold;
-            padding: 15px;
-            background: #0d6efd;
-            color: white;
-            border-bottom: 1px solid #ddd;
-        }
-        /* Chat box with thin blue scrollbar */
-        .chat-box {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        /* Custom thin scrollbar */
-        .chat-box::-webkit-scrollbar {
-            width: 6px;
-        }
-        .chat-box::-webkit-scrollbar-thumb {
-            background: #0d6efd;
-            border-radius: 3px;
-        }
-        /* Messages */
-        .message {
-            padding: 10px;
-            border-radius: 10px;
-            margin: 5px 0;
-            max-width: 75%;
-            white-space: pre-wrap; /* Preserve line breaks */
-            word-wrap: break-word; /* Prevent overflow */
-        }
-        .user-message {
-            background: #0d6efd;
-            color: white;
-            align-self: flex-end;
-        }
-        .bot-message {
-            background: #e9ecef;
-            color: black;
-            align-self: flex-start;
-        }
-        /* Markdown Styling */
-        .bot-message a {
-            color: #0d6efd;
-            text-decoration: none;
-        }
-        .bot-message a:hover {
-            text-decoration: underline;
-        }
-        .bot-message code {
-            background: #f1f1f1;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-        
-        /* Modern Input Box */
-        .input-container {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: white;
-            border-top: 1px solid #ddd;
-        }
-        .input-group {
-            display: flex;
-            align-items: center;
-            flex-grow: 1;
-            position: relative;
-            background: #f1f1f1;
-            border-radius: 25px;
-            padding: 8px 12px;
-        }
-        .input-group textarea {
-            flex-grow: 1;
-            border: none;
-            outline: none;
-            resize: none;
-            background: transparent;
-            font-size: 14px;
-            line-height: 1.5;
-            max-height: 100px;
-            overflow-y: auto;
-        }
-        
-         /* Custom thin scrollbar */
-        .input-group textarea::-webkit-scrollbar {
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html { height: 100%; font-family: Arial, sans-serif; }
+
+        /* Restored Thin Scrollbar Styling */
+        ::-webkit-scrollbar {
             width: 3px;
         }
-        .input-group textarea::-webkit-scrollbar-thumb {
-            background: #0d6efd;
-            border-radius: 3px;
+        ::-webkit-scrollbar-thumb {
+            background-color: #007bff;
+            border-radius: 10px;
         }
-       
-        .input-group button {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 5px 10px;
-            color: #0d6efd;
+        ::-webkit-scrollbar-track {
+            background-color: #f5f5f5;
+            border-radius: 10px;
         }
-        /* Fixed overlay welcome message */
-        .welcome-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #0056b3;
+        }
+
+        .header {
+            display: flex; align-items: center; justify-content: center;
+            padding: 10px 15px; background: #007bff; color: white;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        }
+        .header .name { font-size: 18px; font-weight: bold; }
+
+        .chat-container {
+            display: flex; flex-direction: column; height: 100%;
+            padding-top: 60px; padding-bottom: 100px;
+        }
+        .chat-box {
+            flex: 1; overflow-y: auto; padding: 15px;
+        }
+        .message {
+            margin-bottom: 10px; padding: 10px;
+            border-radius: 8px; max-width: 80%;
+            word-wrap: break-word; white-space: pre-wrap;
+        }
+        .user-message { background: #f1f1f1; margin-left: auto; }
+        .bot-message { background: none; margin-right: auto; }
+        .welcome-message { 
+            color: #00796b; border-radius: 8px; padding: 20px;
+            margin: 15px; font-weight: bold; font-size: 24px;
             text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            padding: 20px;
+        }
+        .welcome-message span { color: #007bff; font-weight: bold; }
+
+        @keyframes shimmer {
+            0% { background-position: -2000% 0; }
+            100% { background-position: 2000% 0; }
+        }
+        .thinking-message {
+            background: linear-gradient(90deg, #007bff 25%, #66aaff 50%, #007bff 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+            padding: 10px;
+            border-radius: 8px;
+            font-style: italic;
+            color: white;
+            max-width: 80%;
+        }
+
+        .input-area {
+            position: fixed; bottom: 40px; left: 0; right: 0;
+            padding: 20px; z-index: 1000;
+        }
+        .input-wrapper {
+            display: flex; align-items: center; border-radius: 20px;
+            background: #f8f9fa; padding: 8px 12px; border: 1px solid #ddd;
+        }
+        textarea {
+            width: 100%; min-height: 40px; max-height: 150px;
+            overflow-y: auto; resize: none; border: none;
+            background: transparent; font-size: 16px; outline: none;
+            padding-right: 40px;
+        }
+        .send-btn {
+            background: #007bff; border: none; color: white;
+            padding: 8px 14px; border-radius: 50%; cursor: pointer;
+            font-size: 16px; transition: 0.3s;
+        }
+        .send-btn:hover { background: #0056b3; }
+        .send-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        footer {
+            position: fixed; bottom: 0; width: 100%;
+            text-align: center; padding: 10px; font-size: 14px; color: #555;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
 </head>
 <body>
-
-<div class="chat-container">
-    <div class="chat-header">ChatBot</div>
-    <div class="chat-box" id="chat-box"></div>
-
-    <!-- Welcome Overlay -->
-    <div class="welcome-overlay" id="welcome-message">
-        Hi, I'm ChatBot.<br>How can I help you today?
-    </div>
-
-    <div class="input-container">
-        <div class="input-group">
-            <textarea id="user-input" placeholder="Type a message..." rows="1" oninput="autoResize()" onkeydown="handleKeyPress(event)"></textarea>
-            <button onclick="sendMessage()">➤</button>
+    <div class="chat-container">
+        <div class="header">
+            <div class="name">AI Chatbot</div>
+        </div>
+        <div class="chat-box" id="chatBox"></div>
+        <div class="input-area">
+            <div class="input-wrapper">
+                <textarea id="userInput" placeholder="Type a message..." rows="1"></textarea>
+                <button id="sendButton" class="send-btn" disabled>➤</button>
+            </div>
         </div>
     </div>
-</div>
+    <footer>
+        <p>This AI ChatBot is for demonstration purposes only.</p>
+    </footer>
 
-<script>
-let firstMessage = true;
-let conversationHistory = []; // Array to store conversation history
+    <script>
+        const chatBox = document.getElementById('chatBox'),
+              userInput = document.getElementById('userInput'),
+              sendButton = document.getElementById('sendButton');
 
-async function sendMessage() {
-  const userInput = document.getElementById("user-input");
-  const chatBox = document.getElementById("chat-box");
-  const welcomeMessage = document.getElementById("welcome-message");
+        const apiUrl = "https://gpt-api-bay.vercel.app/chat";
+        const md = new markdownit();
+        let conversationHistory = [];
 
-  let message = userInput.value.trim();
+        const addMessage = (content, sender) => {
+            let msg = document.createElement('div');
+            msg.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+            msg.innerHTML = sender === 'user' ? content : md.render(content);
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
 
-  if (!message) return;
+        const addWelcomeMessage = () => {
+            let welcomeMsg = document.createElement('div');
+            welcomeMsg.classList.add('message', 'bot-message', 'welcome-message');
+            welcomeMsg.innerHTML = "Hi, I'm <span>AI ChatBot</span>.<br>How can I help you today?";
+            chatBox.appendChild(welcomeMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
 
-  // Remove welcome message on first input
-  if (firstMessage) {
-    welcomeMessage.style.display = "none";
-    firstMessage = false;
-  }
+        const sendMessage = async () => {
+            let message = userInput.value.trim();
+            if (!message) return;
+            addMessage(message, 'user');
+            userInput.value = '';
+            userInput.style.height = "40px"; 
+            sendButton.disabled = true;
 
-  // Display user message
-  const userMessageDiv = document.createElement("div");
-  userMessageDiv.classList.add("message", "user-message");
-  userMessageDiv.textContent = message;
-  chatBox.appendChild(userMessageDiv);
-  userInput.value = "";
-  autoResize();
-  scrollToBottom();
+            conversationHistory.push({ role: "user", content: message });
 
-  // Add user message to conversation history
-  conversationHistory.push({ role: "user", content: message });
+            const thinkingMessage = document.createElement('div');
+            thinkingMessage.classList.add('message', 'thinking-message');
+            thinkingMessage.textContent = "Thinking...";
+            chatBox.appendChild(thinkingMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
 
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ messages: conversationHistory })
+                });
 
+                const data = await response.json();
+                console.log("API Response:", data);
 
-  const payload = {
-    messages: [
-      {
-        role: "system",
-        content: "You are ChatGPT, an AI assistant capable of understanding and responding to code. " +
-          "If the user provides code, analyze and explain it. If needed, correct errors or improve the code. " +
-          "Format all responses using Markdown, and use code blocks (```) when responding with code."
-            },
-            ...conversationHistory // Include the entire conversation history
-        ],
-    stream: false,
-    model: "gpt-4o-mini",
-    temperature: 0.5,
-    presence_penalty: 0,
-    frequency_penalty: 0,
-    top_p: 1
-  };
+                thinkingMessage.remove();
 
-  try {
-    const response = await fetch("http://107.172.32.198:30013/api/openai/v1/chat/completions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: messages }),
+                let botResponse = "Unexpected response format.";
+                if (data?.choices && data.choices.length > 0) {
+                    botResponse = data.choices[0]?.message?.content || "No response content.";
+                } else if (data?.response) { 
+                    botResponse = data.response; 
+                }
+
+                addMessage(botResponse, 'bot');
+                conversationHistory.push({ role: "assistant", content: botResponse });
+            } catch (error) {
+                console.error("API Error:", error);
+                thinkingMessage.remove();
+                addMessage("Error: Could not reach AI service.", 'bot');
+            }
+        };
+
+        userInput.addEventListener('input', () => {
+            userInput.style.height = "40px";
+            userInput.style.height = Math.min(userInput.scrollHeight, 150) + "px";
+            sendButton.disabled = !userInput.value.trim();
         });
 
-    const result = await response.json();
-    const botReply = result.choices?.[0]?.message?.content || "I'm sorry, I couldn't understand that.";
+        userInput.addEventListener('keydown', e => {
+            if (window.innerWidth <= 768) return;
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
 
-    // Render markdown for bot messages
-    const botMessageDiv = document.createElement("div");
-    botMessageDiv.classList.add("message", "bot-message");
-    botMessageDiv.innerHTML = marked.parse(botReply);
-    chatBox.appendChild(botMessageDiv);
-    scrollToBottom();
+        sendButton.addEventListener('click', sendMessage);
 
-    // Add bot reply to conversation history
-    conversationHistory.push({ role: "assistant", content: botReply });
-
-  } catch (error) {
-    console.error("Error:", error);
-    const botMessageDiv = document.createElement("div");
-    botMessageDiv.classList.add("message", "bot-message");
-    botMessageDiv.innerText = "Error connecting to AI. Please try again.";
-    chatBox.appendChild(botMessageDiv);
-    scrollToBottom();
-  }
-}
-
-
-    function autoResize() {
-        const userInput = document.getElementById("user-input");
-        userInput.style.height = "auto";
-        userInput.style.height = Math.min(userInput.scrollHeight, 100) + "px";
-    }
-
-    function scrollToBottom() {
-        const chatBox = document.getElementById("chat-box");
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-</script>
-
+        addWelcomeMessage();
+    </script>
 </body>
 </html>
