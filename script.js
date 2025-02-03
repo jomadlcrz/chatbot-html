@@ -1,0 +1,138 @@
+const chatBox = document.getElementById('chatBox'),
+      userInput = document.getElementById('userInput'),
+      sendButton = document.getElementById('sendButton');
+const apiUrl = "https://gpt-api-bay.vercel.app/chat"; // Updated API URL
+
+// Initialize markdown-it
+const md = new markdownit();
+
+// Keep track of the conversation history for continuous conversation
+let conversationHistory = [];
+
+// Function to add message with Markdown parsing (except for user messages)
+const addMessage = (content, sender) => {
+    let msg = document.createElement('div');
+    msg.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+
+    if (sender === 'user') {
+        msg.textContent = content;  // User message: plain text (no markdown rendering)
+    } else {
+        msg.innerHTML = md.render(content);  // Bot message: Markdown rendering
+    }
+
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+};
+
+// Function to load chat history from local storage
+const loadChatHistory = () => {
+    const savedHistory = JSON.parse(localStorage.getItem('conversationHistory'));
+    if (savedHistory) {
+        savedHistory.forEach(message => {
+            addMessage(message.content, message.role);
+            // Ensure that the conversationHistory array is updated accordingly
+            conversationHistory.push(message);
+        });
+    }
+};
+
+// Function to save chat history to local storage
+const saveChatHistory = () => {
+    localStorage.setItem('conversationHistory', JSON.stringify(conversationHistory));
+};
+
+// Function to handle sending a message
+const sendMessage = () => {
+    let message = userInput.value.trim();
+    if (!message) return;
+    addMessage(message, 'user');
+    userInput.value = '';
+    userInput.style.height = "50px";  // Adjusted height
+    sendButton.disabled = true;
+
+    // Add the user message to the conversation history
+    conversationHistory.push({ role: "user", content: message });
+    saveChatHistory(); // Save chat history to local storage
+
+    // Show "Thinking..." message before the response
+    const thinkingMessage = document.createElement('div');
+    thinkingMessage.classList.add('message', 'thinking-message');
+    thinkingMessage.textContent = "Thinking... 💬";
+    chatBox.appendChild(thinkingMessage);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Send the conversation history to the API using fetch()
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messages: conversationHistory }),
+    })
+    .then(response => response.json())
+    .then(res => {
+        console.log(res); // Log the response to inspect its structure
+        // Remove Thinking... message after response
+        thinkingMessage.remove();
+
+        // Check if the response has the expected message
+        if (res && res.response) {
+            const botResponse = res.response || "Unexpected response format.";
+            addMessage(botResponse, 'bot');
+            conversationHistory.push({ role: "assistant", content: botResponse });
+            saveChatHistory(); // Save updated chat history to local storage
+        } else {
+            addMessage("Error: Unexpected response format.", 'bot');
+        }
+    })
+    .catch(() => {
+        thinkingMessage.remove();
+        addMessage("Error: Could not reach AI service.", 'bot');
+    });
+};
+
+// Function to remove the welcome message once the user sends a message
+const removeWelcomeMessage = () => {
+    const welcomeMessage = document.querySelector('.welcome-message');
+    if (welcomeMessage) {
+        welcomeMessage.remove();
+    }
+};
+
+// Function to check if the chat history is empty before displaying welcome message
+const displayWelcomeMessageIfNeeded = () => {
+    if (conversationHistory.length === 0) {
+        let welcomeMsg = document.createElement('div');
+        welcomeMsg.classList.add('message', 'bot-message', 'welcome-message');
+        welcomeMsg.innerHTML = "Hi, I'm <span>AI ChatBot</span>.<br>How can I help you today?";
+        chatBox.appendChild(welcomeMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+};
+
+// Load chat history from local storage
+loadChatHistory();
+displayWelcomeMessageIfNeeded();
+
+// Handle user input
+userInput.addEventListener('input', () => {
+    userInput.style.height = "50px";  // Adjusted height for better input area
+    userInput.style.height = Math.min(userInput.scrollHeight, 150) + "px";
+    sendButton.disabled = !userInput.value.trim();
+});
+
+userInput.addEventListener('keydown', e => {
+    if (window.innerWidth <= 768) return;
+
+    if (e.key === 'Enter') {
+        if (e.shiftKey) return;
+        e.preventDefault();
+        removeWelcomeMessage();
+        sendMessage();
+    }
+});
+
+sendButton.addEventListener('click', () => {
+    removeWelcomeMessage();
+    sendMessage();
+});
