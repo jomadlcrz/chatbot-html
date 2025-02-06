@@ -209,8 +209,10 @@ footer p {
 /* Reset Icon Styling */
 .reset-icon {
     position: absolute;
-    right: 20px;
-    font-size: 20px;
+    top: 15px;
+    right: 15px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     padding: 4px; /* Set padding here */
     border: 1px solid transparent; /* Set a transparent border by default */
