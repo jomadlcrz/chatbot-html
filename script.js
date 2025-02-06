@@ -151,7 +151,7 @@ const displayWelcomeMessageIfNeeded = () => {
   if (conversationHistory.length === 0) {
     let welcomeMsg = document.createElement('div');
     welcomeMsg.classList.add('message', 'bot-message', 'welcome-message');
-    welcomeMsg.innerHTML = "Hi, I'm <span>AI ChatBot</span>.<br>How can I help you today?";
+    welcomeMsg.innerHTML = "How can I help you today?";
     chatBox.appendChild(welcomeMsg);
     chatBox.scrollTop = chatBox.scrollHeight;
   }

@@ -160,11 +160,6 @@ textarea {
     max-width: 80%;
 }
 
-.welcome-message span { 
-    color: #007bff; 
-    font-weight: bold; 
-}
-
 /* Horizontal Shimmering Effect */
 @keyframes shimmer {
     0% {
