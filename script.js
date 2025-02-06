@@ -18,6 +18,11 @@ confirmYes.addEventListener('click', () => {
     chatBox.innerHTML = ""; // Clear UI chat messages
     confirmModal.style.display = "none"; // Close modal
     displayWelcomeMessageIfNeeded(); // Show welcome message again
+
+    // Abort the ongoing fetch request if any
+    if (abortController) {
+        abortController.abort();
+    }
 });
 
 // Close modal if "No" is clicked
@@ -25,17 +30,17 @@ confirmNo.addEventListener('click', () => {
     confirmModal.style.display = "none";
 });
 
-// 
 const chatBox = document.getElementById('chatBox'),
   userInput = document.getElementById('userInput'),
   sendButton = document.getElementById('sendButton');
 const apiUrl = "https://gpt-api-bay.vercel.app/chat"; // Updated API URL
 
 // Initialize markdown-it
-const md = new markdownit();
+const md = new markdownit({ breaks: true, html: false });
 
 // Keep track of the conversation history for continuous conversation
 let conversationHistory = [];
+let abortController; // Declare AbortController
 
 // Function to add message with Markdown parsing (except for user messages)
 const addMessage = (content, sender) => {
@@ -45,7 +50,8 @@ const addMessage = (content, sender) => {
   if (sender === 'user') {
     msg.textContent = content; // User message: plain text (no markdown rendering)
   } else {
-    msg.innerHTML = md.render(content); // Bot message: Markdown rendering
+        const normalizedContent = content.replace(/\n{2,}/g, '\n'); // Converts multiple \n\n\n to a single \n
+        msg.innerHTML = md.render(normalizedContent);
   }
 
   chatBox.appendChild(msg);
@@ -75,7 +81,7 @@ const sendMessage = () => {
   if (!message) return;
   addMessage(message, 'user');
   userInput.value = '';
-  userInput.style.height = "50px"; // Adjusted height
+  userInput.style.height = "80px"; // Adjusted height
   sendButton.disabled = true;
 
   // Add the user message to the conversation history
@@ -89,6 +95,10 @@ const sendMessage = () => {
   chatBox.appendChild(thinkingMessage);
   chatBox.scrollTop = chatBox.scrollHeight;
 
+  // Create a new AbortController for each request
+  abortController = new AbortController();
+  const { signal } = abortController;
+
   // Send the conversation history to the API using fetch()
   fetch(apiUrl, {
       method: 'POST',
@@ -96,6 +106,7 @@ const sendMessage = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ messages: conversationHistory }),
+      signal: signal, // Attach the signal to fetch request
     })
     .then(response => response.json())
     .then(res => {
@@ -113,15 +124,18 @@ const sendMessage = () => {
         addMessage("Error: Unexpected response format.", 'bot');
       }
     })
-    .catch(() => {
-    thinkingMessage.remove();
-    const errorMsg = document.createElement('div');
-    errorMsg.classList.add('message', 'bot-message', 'error-message');
-    errorMsg.textContent = "Error: Could not reach AI service.";
-    chatBox.appendChild(errorMsg);
-    chatBox.scrollTop = chatBox.scrollHeight;
-});
-
+    .catch((error) => {
+      if (error.name === 'AbortError') {
+        console.log('Fetch request was aborted');
+      } else {
+        thinkingMessage.remove();
+        const errorMsg = document.createElement('div');
+        errorMsg.classList.add('message', 'bot-message', 'error-message');
+        errorMsg.textContent = "Error: Could not reach AI service.";
+        chatBox.appendChild(errorMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    });
 };
 
 // Function to remove the welcome message once the user sends a message
@@ -149,7 +163,7 @@ displayWelcomeMessageIfNeeded();
 
 // Handle user input
 userInput.addEventListener('input', () => {
-  userInput.style.height = "50px"; // Adjusted height for better input area
+  userInput.style.height = "80px"; // Adjusted height for better input area
   userInput.style.height = Math.min(userInput.scrollHeight, 150) + "px";
   sendButton.disabled = !userInput.value.trim();
 });
