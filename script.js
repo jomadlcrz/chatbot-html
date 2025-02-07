@@ -1,33 +1,16 @@
 const resetButton = document.getElementById('resetChat');
-const confirmModal = document.getElementById('confirmModal');
-const confirmYes = document.getElementById('confirmYes');
-const confirmNo = document.getElementById('confirmNo');
 
-// Show modal when reset button is clicked (only if there is a conversation)
+// Reset chat when button is clicked
 resetButton.addEventListener('click', () => {
-    const storedHistory = localStorage.getItem('conversationHistory');
-    if (conversationHistory.length > 0 || storedHistory) {
-        confirmModal.style.display = "flex";
-    }
-});
-
-// Handle confirmation
-confirmYes.addEventListener('click', () => {
     localStorage.removeItem('conversationHistory'); // Clear local storage
     conversationHistory = []; // Reset chat history array
     chatBox.innerHTML = ""; // Clear UI chat messages
-    confirmModal.style.display = "none"; // Close modal
     displayWelcomeMessageIfNeeded(); // Show welcome message again
 
     // Abort the ongoing fetch request if any
     if (abortController) {
         abortController.abort();
     }
-});
-
-// Close modal if "No" is clicked
-confirmNo.addEventListener('click', () => {
-    confirmModal.style.display = "none";
 });
 
 const chatBox = document.getElementById('chatBox'),
@@ -50,8 +33,8 @@ const addMessage = (content, sender) => {
   if (sender === 'user') {
     msg.textContent = content; // User message: plain text (no markdown rendering)
   } else {
-        const normalizedContent = content.replace(/\n{2,}/g, '\n'); // Converts multiple \n\n\n to a single \n
-        msg.innerHTML = md.render(normalizedContent);
+    const normalizedContent = content.replace(/\n{2,}/g, '\n'); // Converts multiple \n\n\n to a single \n
+    msg.innerHTML = md.render(normalizedContent);
   }
 
   chatBox.appendChild(msg);

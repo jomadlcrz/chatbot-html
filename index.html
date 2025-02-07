@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AI ChatBot</title>
+    <title>ChatBot</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">  <!-- Link to the external CSS -->
@@ -13,20 +13,10 @@
     <div class="chat-container">
         <!-- Header Section -->
         <div class="header">
-            <div class="name">AI ChatBot</div> <!-- AI Name Centered -->
-            <div class="reset-icon" id="resetChat" title="Start a new conversation">New chat</div> <!-- Reset Icon -->
+            <div class="name">ChatBot</div> <!-- AI Name Centered -->
+            <div class="reset-icon" id="resetChat" title="New chat">⟲</div> <!-- Reset Icon -->
         </div>
-        
-        <!-- Custom Confirmation Modal -->
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <p>Are you sure you want to reset the conversation?</p>
-            <div class="modal-buttons">
-                <button id="confirmYes">Yes</button>
-                <button id="confirmNo">No</button>
-            </div>
-        </div>
-    </div>
+
 
         <!-- Chat Box -->
         <div class="chat-box" id="chatBox"></div>
@@ -34,7 +24,7 @@
         <!-- Input Area -->
         <div class="input-area">
             <div class="input-wrapper">
-                <textarea id="userInput" placeholder="Message AI ChatBot" rows="1"></textarea>
+                <textarea id="userInput" placeholder="Message ChatBot" rows="1"></textarea>
                 <button id="sendButton" class="send-btn" disabled>➤</button>
             </div>
         </div>
@@ -42,7 +32,7 @@
 
     <!-- Disclaimer Footer -->
     <footer>
-        <p>This AI ChatBot is for demonstration purposes only.</p>
+        <p>This ChatBot is for demonstration purposes only.</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
