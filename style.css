@@ -53,6 +53,8 @@ body, html {
 .input-area {
     position: fixed;
     bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     left: 0;
     right: 0;
     z-index: 1000;
@@ -156,11 +158,6 @@ textarea {
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 80%;
-}
-
-.welcome-message span {
-  color: #007bff;
-  font-weight: bold;
 }
 
 .thinking-message {
