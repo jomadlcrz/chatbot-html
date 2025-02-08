@@ -64,7 +64,7 @@ const sendMessage = () => {
   if (!message) return;
   addMessage(message, 'user');
   userInput.value = '';
-  userInput.style.height = "80px"; // Adjusted height
+  userInput.style.height = "100px"; // Adjusted height
   sendButton.disabled = true;
 
   // Add the user message to the conversation history
@@ -146,8 +146,8 @@ displayWelcomeMessageIfNeeded();
 
 // Handle user input
 userInput.addEventListener('input', () => {
-  userInput.style.height = "80px"; // Adjusted height for better input area
-  userInput.style.height = Math.min(userInput.scrollHeight, 150) + "px";
+  userInput.style.height = "100px"; // Adjusted height for better input area
+  userInput.style.height = Math.min(userInput.scrollHeight, 250) + "px";
   sendButton.disabled = !userInput.value.trim();
 });
 

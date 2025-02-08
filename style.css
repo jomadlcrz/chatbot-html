@@ -75,8 +75,8 @@ body, html {
 
 textarea {
     width: 100%;
-    min-height: 80px;
-    max-height: 150px;
+    min-height: 100px;
+    max-height: 250px;
     overflow-y: auto;
     resize: none;
     border: none;
