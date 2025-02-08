@@ -76,7 +76,7 @@ body, html {
 textarea {
     width: 100%;
     min-height: 100px;
-    max-height: 250px;
+    max-height: 300px;
     overflow-y: auto;
     resize: none;
     border: none;
@@ -264,10 +264,6 @@ footer p {
 }
 
 .reset-icon {
-    user-select: none; /* Prevents text selection */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
     position: absolute;
     align-items: center;
     justify-content: center;
@@ -276,12 +272,18 @@ footer p {
     font-weight: bold;
     cursor: pointer;
     padding: 8px;
-    border: 1px solid transparent;
     border-radius: 8px;
     transition: none;
-    border: 1px solid;
+    user-select: none; /* Prevents text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     -webkit-tap-highlight-color: transparent; /* Removes default tap highlight */
     outline: none; /* Removes focus outline */
+}
+
+.reset-icon:hover {
+    background-color: #0056b3;
 }
 
 .reset-icon:focus {
@@ -290,7 +292,7 @@ footer p {
 
 @media (hover: hover) {
     .reset-icon::after {
-        content: "Reset Chat"; /* Tooltip text */
+        content: "New chat"; /* Tooltip text */
         position: absolute;
         bottom: -30px; /* Moves tooltip below the icon */
         left: 30%;

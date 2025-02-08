@@ -1,4 +1,14 @@
 const resetButton = document.getElementById('resetChat');
+const resetIcon = document.querySelector('.reset-icon');
+
+resetIcon.addEventListener('mousedown', (e) => {
+    e.preventDefault(); // Prevents dragging behavior
+});
+
+resetIcon.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevents dragging on touch devices
+});
+
 
 // Reset chat when button is clicked
 resetButton.addEventListener('click', () => {
@@ -147,7 +157,7 @@ displayWelcomeMessageIfNeeded();
 // Handle user input
 userInput.addEventListener('input', () => {
   userInput.style.height = "100px"; // Adjusted height for better input area
-  userInput.style.height = Math.min(userInput.scrollHeight, 250) + "px";
+  userInput.style.height = Math.min(userInput.scrollHeight, 300) + "px";
   sendButton.disabled = !userInput.value.trim();
 });
 
@@ -165,4 +175,12 @@ userInput.addEventListener('keydown', e => {
 sendButton.addEventListener('click', () => {
   removeWelcomeMessage();
   sendMessage();
+});
+
+sendButton.addEventListener('mousedown', (e) => {
+  e.preventDefault(); // Prevents dragging behavior
+});
+
+sendButton.addEventListener('touchstart', (e) => {
+  e.preventDefault(); // Prevents dragging on touch devices
 });
