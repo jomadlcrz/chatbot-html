@@ -1,14 +1,4 @@
 const resetButton = document.getElementById('resetChat');
-const resetIcon = document.querySelector('.reset-icon');
-
-resetIcon.addEventListener('mousedown', (e) => {
-    e.preventDefault(); // Prevents dragging behavior
-});
-
-resetIcon.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevents dragging on touch devices
-});
-
 
 // Reset chat when button is clicked
 resetButton.addEventListener('click', () => {
@@ -175,12 +165,4 @@ userInput.addEventListener('keydown', e => {
 sendButton.addEventListener('click', () => {
   removeWelcomeMessage();
   sendMessage();
-});
-
-sendButton.addEventListener('mousedown', (e) => {
-  e.preventDefault(); // Prevents dragging behavior
-});
-
-sendButton.addEventListener('touchstart', (e) => {
-  e.preventDefault(); // Prevents dragging on touch devices
 });
