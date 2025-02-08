@@ -95,6 +95,11 @@ textarea {
     font-size: 16px;
     transition: 0.3s;
     margin-top: 8px;
+    position: relative; /* Ensure it serves as the positioning reference */
+    user-select: none; /* Prevents text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 .send-btn:hover {
@@ -104,6 +109,52 @@ textarea {
 .send-btn:disabled {
     background: #ccc;
     cursor: not-allowed;
+}
+
+@media (hover: hover) {
+    .send-btn:not(:disabled)::after {
+        content: "Send Message"; /* Tooltip text */
+        position: absolute;
+        top: -35px; /* Moves tooltip above the button */
+        left: 50%; /* Center horizontally */
+        transform: translateX(-50%); /* Ensures perfect centering */
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition-delay: 0.5s; /* Delay before showing */
+        pointer-events: none;
+    }
+
+    .send-btn:not(:disabled):hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px); /* Smooth upward transition */
+    }
+
+    .send-btn:disabled::after {
+        content: "Message is empty"; /* Tooltip text for disabled state */
+        position: absolute;
+        top: -35px; /* Moves tooltip above the button */
+        left: 50%; /* Center horizontally */
+        transform: translateX(-50%); /* Ensures perfect centering */
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+        pointer-events: none;
+    }
+
+    .send-btn:disabled:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px); /* Smooth upward transition */
+    }
 }
 
 /* Chat Box */
@@ -145,18 +196,18 @@ textarea {
 }
 
 .welcome-message {
-  color: #00796b;
-  border-radius: 8px;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 26px;
-  text-align: center;
-  white-space: pre-wrap;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 80%;
+    color: #00796b;
+    border-radius: 8px;
+    padding: 20px;
+    font-weight: bold;
+    font-size: 26px;
+    text-align: center;
+    white-space: pre-wrap;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
 }
 
 .thinking-message {
@@ -205,6 +256,10 @@ footer p {
 }
 
 .reset-icon {
+    user-select: none; /* Prevents text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     position: absolute;
     align-items: center;
     justify-content: center;
@@ -216,13 +271,31 @@ footer p {
     border: 1px solid transparent;
     border-radius: 8px;
     transition: none;
+    border: 1px solid;
     -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
 }
 
-@media (hover: hover) { 
-    /* Only applies hover effect on devices that support hovering (desktops) */
-    .reset-icon:hover {
-        border: 1px solid;
+@media (hover: hover) {
+    .reset-icon::after {
+        content: "Reset Chat"; /* Tooltip text */
+        position: absolute;
+        bottom: -30px; /* Moves tooltip below the icon */
+        left: 30%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition-delay: 0.5s; /* Delay before showing */
+        pointer-events: none;
+    }
+
+    .reset-icon:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(5px); /* Smooth downward transition */
     }
 }
 
@@ -230,9 +303,7 @@ footer p {
 .reset-icon:focus,  
 .reset-icon:active {
     outline: none;
-    border: 1px solid transparent !important;
 }
-
 
 /* Error Message Styling */
 .error-message {
