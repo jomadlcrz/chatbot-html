@@ -100,6 +100,11 @@ textarea {
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
+    -webkit-tap-highlight-color: transparent; /* Removes default tap highlight */
+    outline: none; /* Removes focus outline */
+}
+.send-btn:focus {
+    outline: none; /* Ensures no focus outline appears */
 }
 
 .send-btn:hover {
@@ -275,7 +280,12 @@ footer p {
     border-radius: 8px;
     transition: none;
     border: 1px solid;
-    -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+    -webkit-tap-highlight-color: transparent; /* Removes default tap highlight */
+    outline: none; /* Removes focus outline */
+}
+
+.reset-icon:focus {
+    outline: none;
 }
 
 @media (hover: hover) {
@@ -303,12 +313,6 @@ footer p {
     .reset-icon:not(:disabled):not(:hover)::after {
         transition-delay: 0s; /* No delay for hiding */
     }
-}
-
-/* Remove border when clicking/tapping */
-.reset-icon:focus,  
-.reset-icon:active {
-    outline: none;
 }
 
 /* Error Message Styling */
