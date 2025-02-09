@@ -34,37 +34,12 @@ const addMessage = (content, sender) => {
     msg.textContent = content; // User message: plain text (no markdown rendering)
   } else {
     const normalizedContent = content.replace(/\n{2,}/g, '\n'); // Converts multiple \n\n\n to a single \n
-
-    // Check for separator " --- " and split the message content
-    const parts = normalizedContent.split('---');
-    if (parts.length > 1) {
-      // If there's a separator, split the content and insert a line break (or custom separator)
-      msg.innerHTML = parts.map((part, index) => {
-        // Add a line break or divider after each part except the last one
-        if (index < parts.length - 1) {
-          return md.render(part) + '<hr class="separator">';
-        }
-        return md.render(part);
-      }).join('');
-    } else {
-      msg.innerHTML = md.render(normalizedContent); // Regular bot message rendering
-    }
+    msg.innerHTML = md.render(normalizedContent);
   }
 
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
-
-// Style the separator
-const styleSeparator = document.createElement('style');
-styleSeparator.textContent = `
-  .separator {
-    border: none;
-    border-top: 2px solid #ccc;
-    margin: 10px 0;
-  }
-`;
-document.head.appendChild(styleSeparator);
 
 // Function to load chat history from local storage
 const loadChatHistory = () => {
