@@ -278,43 +278,13 @@ footer p {
     padding: 8px;
     border-radius: 8px;
     transition: none;
+    border: 1px solid #ddd;
     -webkit-tap-highlight-color: transparent; /* Removes default tap highlight */
     outline: none; /* Removes focus outline */
 }
 
-.reset-icon:hover {
-    background-color: #0056b3;
-}
-
 .reset-icon:focus {
     outline: none;
-}
-
-@media (hover: hover) {
-    .reset-icon::after {
-        content: "Reset Chat"; /* Tooltip text */
-        position: absolute;
-        bottom: -30px; /* Moves tooltip below the icon */
-        left: 30%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 5px 8px;
-        border-radius: 5px;
-        font-size: 12px;
-        white-space: nowrap;
-        opacity: 0;
-        transition-delay: 0.5s; /* Delay before showing */
-        pointer-events: none;
-    }
-
-    .reset-icon:hover::after {
-        opacity: 1;
-        transform: translateX(-50%) translateY(5px); /* Smooth downward transition */
-    }
-    .reset-icon:not(:disabled):not(:hover)::after {
-        transition-delay: 0s; /* No delay for hiding */
-    }
 }
 
 /* Error Message Styling */
@@ -344,26 +314,21 @@ footer p {
 
 /* Code Block Styling */
 pre, code {
-    background-color: #444;
+    background-color: #f1f1f1;
     border-radius: 8px;
-    color: #e0e0e0;
     padding: 10px;
     font-family: "Courier New", Courier, monospace;
 }
 
 /* Inline Code */
 code {
+    color: #000000;
     padding: 2px 5px;
     border-radius: 8px;
 }
 
 /* Syntax Highlighting */
 pre {
+    border: 1px solid #ccc;
     margin: 10px 0;
-}
-
-/* For highlighting special characters or words */
-pre span.highlight {
-    background-color: #444;
-    color: #FFEB3B;
 }
