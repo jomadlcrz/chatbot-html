@@ -16,7 +16,7 @@ resetButton.addEventListener('click', () => {
 const chatBox = document.getElementById('chatBox'),
   userInput = document.getElementById('userInput'),
   sendButton = document.getElementById('sendButton');
-const apiUrl = "https://server-groq-api.onrender.com/chat"; // Updated API URL
+const apiUrl = "https://gpt-api-bay.vercel.app/chat"; // Updated API URL
 
 // Initialize markdown-it
 const md = new markdownit({ breaks: true, html: false });

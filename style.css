@@ -21,7 +21,7 @@ body, html {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #f5f5f5;
+    background-color: #ccc;
     border-radius: 10px;
 }
 
@@ -309,26 +309,31 @@ footer p {
 .markdown-body {
     font-size: 16px;
     line-height: 1.5;
-    color: #e0e0e0;
+    color: #333;
 }
 
-/* Code Block Styling */
-pre, code {
-    background-color: #f1f1f1;
+/* Code Styling */
+pre {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px;
-    font-family: "Courier New", Courier, monospace;
-}
-
-/* Inline Code */
-code {
-    color: #000000;
-    padding: 2px 5px;
-    border-radius: 8px;
-}
-
-/* Syntax Highlighting */
-pre {
-    border: 1px solid #ccc;
     margin: 10px 0;
+    overflow-x: auto;
+}
+
+pre code {
+    color: #007bff; /* Blue for block code */
+    font-family: "Courier New", Courier, monospace;
+    padding: 0;
+    background: none;
+}
+
+/* Inline Code Styling */
+code {
+    background-color: #ccc; /* Light gray for inline code */
+    color: black;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: "Courier New", Courier, monospace;
 }
