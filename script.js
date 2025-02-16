@@ -31,15 +31,53 @@ const addMessage = (content, sender) => {
   msg.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
 
   if (sender === 'user') {
-    msg.textContent = content; // User message: plain text (no markdown rendering)
+    msg.textContent = content;
   } else {
-    const normalizedContent = content.replace(/\n{2,}/g, '\n'); // Converts multiple \n\n\n to a single \n
+    const normalizedContent = content.replace(/\n{2,}/g, '\n');
     msg.innerHTML = md.render(normalizedContent);
+
+    // Highlight and enhance code blocks
+    msg.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightBlock(block);
+      
+      // Detect the language
+      let detectedLang = block.className.match(/language-(\w+)/);
+      let langLabel = detectedLang ? detectedLang[1] : "Code";
+
+      // Create a wrapper for styling
+      let preWrapper = document.createElement('div');
+      preWrapper.classList.add('code-wrapper');
+
+      // Create label
+      let label = document.createElement('span');
+      label.classList.add('code-lang');
+      label.textContent = langLabel;
+
+      // Create copy button
+      let copyButton = document.createElement('button');
+      copyButton.classList.add('copy-code-btn');
+      copyButton.innerHTML = `<i class="fa-regular fa-clone"></i> Copy`;
+
+      copyButton.onclick = () => {
+        navigator.clipboard.writeText(block.textContent);
+        copyButton.innerHTML = `<i class="fa-solid fa-check"></i> Copied`;
+        setTimeout(() => copyButton.innerHTML = `<i class="fa-regular fa-clone"></i> Copy`, 1500);
+      };
+
+      // Wrap pre inside wrapper and append elements
+      let preElement = block.parentElement;
+      preElement.parentElement.replaceChild(preWrapper, preElement);
+      preWrapper.appendChild(label);
+      preWrapper.appendChild(copyButton);
+      preWrapper.appendChild(preElement);
+    });
   }
 
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
+
+
 
 // Function to load chat history from local storage
 const loadChatHistory = () => {
@@ -50,6 +88,9 @@ const loadChatHistory = () => {
       // Ensure that the conversationHistory array is updated accordingly
       conversationHistory.push(message);
     });
+
+    // Highlight code blocks in the loaded messages
+    hljs.highlightAll();
   }
 };
 

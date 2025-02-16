@@ -16,7 +16,7 @@ body, html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #007bff;
+    background-color: #2f32f2;
     border-radius: 10px;
 }
 
@@ -26,7 +26,7 @@ body, html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #0056b3;
+    background-color: #2226a2;
 }
 
 /* Fixed Header */
@@ -35,7 +35,7 @@ body, html {
     align-items: center;
     justify-content: center;
     padding: 15px;
-    background: #007bff;
+    background: #2f32f2;
     color: white;
     position: fixed;
     top: 0;
@@ -53,8 +53,7 @@ body, html {
 .input-area {
     position: fixed;
     bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0 20px;
     left: 0;
     right: 0;
     z-index: 1000;
@@ -86,7 +85,7 @@ textarea {
 }
 
 .send-btn {
-    background: #007bff;
+    background: #2f32f2;
     border: none;
     color: white;
     padding: 8px 14px;
@@ -95,20 +94,21 @@ textarea {
     font-size: 16px;
     transition: 0.3s;
     margin-top: 8px;
-    position: relative; /* Ensure it serves as the positioning reference */
-    user-select: none; /* Prevents text selection */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    -webkit-tap-highlight-color: transparent; /* Removes default tap highlight */
-    outline: none; /* Removes focus outline */
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
+
 .send-btn:focus {
-    outline: none; /* Ensures no focus outline appears */
+    outline: none;
 }
 
 .send-btn:hover {
-    background: #0056b3;
+    background: #2226a2;
 }
 
 .send-btn:disabled {
@@ -118,11 +118,11 @@ textarea {
 
 @media (hover: hover) {
     .send-btn:not(:disabled)::after {
-        content: "Send Message"; /* Tooltip text */
+        content: "Send Message";
         position: absolute;
-        top: -35px; /* Moves tooltip above the button */
-        left: 50%; /* Center horizontally */
-        transform: translateX(-50%); /* Ensures perfect centering */
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
         background: rgba(0, 0, 0, 0.8);
         color: white;
         padding: 5px 8px;
@@ -130,21 +130,21 @@ textarea {
         font-size: 12px;
         white-space: nowrap;
         opacity: 0;
-        transition-delay: 0.5s; /* Delay before showing */
+        transition-delay: 0.5s;
         pointer-events: none;
     }
 
     .send-btn:not(:disabled):hover::after {
         opacity: 1;
-        transform: translateX(-50%) translateY(-5px); /* Smooth upward transition */
+        transform: translateX(-50%) translateY(-5px);
     }
 
     .send-btn:disabled::after {
-        content: "Message is empty"; /* Tooltip text for disabled state */
+        content: "Message is empty";
         position: absolute;
-        top: -35px; /* Moves tooltip above the button */
-        left: 50%; /* Center horizontally */
-        transform: translateX(-50%); /* Ensures perfect centering */
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
         background: rgba(0, 0, 0, 0.8);
         color: white;
         padding: 5px 8px;
@@ -158,10 +158,11 @@ textarea {
 
     .send-btn:disabled:hover::after {
         opacity: 1;
-        transform: translateX(-50%) translateY(-5px); /* Smooth upward transition */
+        transform: translateX(-50%) translateY(-5px);
     }
+
     .send-btn:not(:disabled):not(:hover)::after {
-        transition-delay: 0s; /* No delay for hiding */
+        transition-delay: 0s;
     }
 }
 
@@ -187,10 +188,17 @@ textarea {
 .message {
     margin-bottom: 12px;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 20px;
     max-width: 75%;
     word-wrap: break-word;
     white-space: pre-wrap;
+    width: fit-content; /* Adjust width to fit content */
+}
+
+@media (max-width: 600px) {
+    .message {
+        max-width: 90vw;
+    }
 }
 
 .user-message {
@@ -204,7 +212,7 @@ textarea {
 }
 
 .welcome-message {
-    color: #00796b;
+    color: #2f32f2;
     border-radius: 8px;
     padding: 20px;
     font-weight: bold;
@@ -219,7 +227,7 @@ textarea {
 }
 
 .thinking-message {
-    background: #007bff;
+    background: #2f32f2;
     position: relative;
     padding: 10px;
     border-radius: 8px;
@@ -264,23 +272,25 @@ footer p {
 }
 
 .reset-icon {
-    user-select: none; /* Prevents text selection */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     position: absolute;
     align-items: center;
     justify-content: center;
     right: 20px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     padding: 8px;
     border-radius: 8px;
     transition: none;
-    border: 1px solid #ddd;
-    -webkit-tap-highlight-color: transparent; /* Removes default tap highlight */
-    outline: none; /* Removes focus outline */
+    color: white;
+    background: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 .reset-icon:focus {
@@ -300,7 +310,7 @@ footer p {
 }
 
 .error-message::before {
-    content: "⚠️"; /* Triangle Exclamation */
+    content: "⚠️";
     font-size: 20px;
     margin-right: 8px;
 }
@@ -316,14 +326,13 @@ footer p {
 pre {
     background-color: #f5f5f5;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
     margin: 10px 0;
     overflow-x: auto;
+    border-radius: 0 0 5px 5px;
 }
 
 pre code {
-    color: #007bff; /* Blue for block code */
+    color: #007bff;
     font-family: "Courier New", Courier, monospace;
     padding: 0;
     background: none;
@@ -331,9 +340,45 @@ pre code {
 
 /* Inline Code Styling */
 code {
-    background-color: #ccc; /* Light gray for inline code */
+    background-color: #ccc;
     color: black;
     padding: 2px 5px;
     border-radius: 4px;
     font-family: "Courier New", Courier, monospace;
+}
+
+.code-wrapper {
+    position: relative;
+    background: #2f32f2;
+    border-radius: 5px;
+    padding-top: 30px;
+}
+
+.code-lang {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    color: #fff;
+    font-size: 12px;
+    background: none;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+
+.copy-code-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 12px;
+    background: none;
+    color: #fff;
+    border: none;
+    padding: 3px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.copy-code-btn:focus,
+.copy-code-btn:active {
+    outline: none;
 }
