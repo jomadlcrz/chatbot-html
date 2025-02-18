@@ -298,6 +298,31 @@ footer p {
     outline: none;
 }
 
+/* Tooltip for reset-icon */
+@media (hover: hover) {
+    .reset-icon::after {
+        content: "New chat";
+        position: absolute;
+        bottom: -35px; /* Position the tooltip below */
+        left: 10%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+        pointer-events: none;
+    }
+
+    .reset-icon:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
 /* Error Message Styling */
 .error-message {
     background: #ffcccc;
@@ -385,29 +410,29 @@ code {
 }
 
 .copy-text-btn {
-  background: transparent;
-  border: none;
-  color: #555;
-  cursor: pointer;
-  margin-top: 5px;
-  font-size: 0.9em;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  outline: none;          /* Remove default outline */
-  box-shadow: none;       /* Remove any shadow */
+    background: transparent;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 0.9em;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    outline: none;          /* Remove default outline */
+    box-shadow: none;       /* Remove any shadow */
 }
 
 .copy-text-btn:focus {
-  outline: none;          /* Ensure no outline on focus */
-  box-shadow: none;       /* No shadow on focus */
-}
+    outline: none;          /* Ensure no outline on focus */
+    box-shadow: none;       /* No shadow on focus */
+    }
 
 .copy-text-btn i {
-  color: #888;
-  transition: color 0.3s;
-}
+    color: #888;
+    transition: color 0.3s;
+    }
 
 .copy-text-btn:hover i {
-  color: #333;
+    color: #333;
 }

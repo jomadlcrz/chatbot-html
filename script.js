@@ -26,7 +26,6 @@ let conversationHistory = [];
 let abortController; // Declare AbortController
 
 // Function to add message with Markdown parsing (except for user messages)
-// Function to add message with Markdown parsing (except for user messages)
 const addMessage = (content, sender) => {
   let msg = document.createElement('div');
   msg.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
