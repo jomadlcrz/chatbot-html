@@ -26,16 +26,43 @@ let conversationHistory = [];
 let abortController; // Declare AbortController
 
 // Function to add message with Markdown parsing (except for user messages)
+// Function to add message with Markdown parsing (except for user messages)
 const addMessage = (content, sender) => {
   let msg = document.createElement('div');
   msg.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
-
+  
   if (sender === 'user') {
     msg.textContent = content;
   } else {
     const normalizedContent = content.replace(/\n{2,}/g, '\n');
     msg.innerHTML = md.render(normalizedContent);
-
+    
+    // Store the original Markdown content in a data attribute
+    msg.dataset.markdownContent = content;
+    
+    // Add copy button for bot messages
+    let copyTextButton = document.createElement('button');
+    copyTextButton.classList.add('copy-text-btn');
+    copyTextButton.innerHTML = `<i class="fa-regular fa-clone"></i>`;
+    
+    // Handle copy event
+    copyTextButton.onclick = () => {
+      // Retrieve the original Markdown content from the data attribute
+      let markdownToCopy = msg.dataset.markdownContent;
+      
+      // Copy the Markdown content to the clipboard
+      navigator.clipboard.writeText(markdownToCopy).then(() => {
+        // Change the icon to indicate success
+        copyTextButton.innerHTML = `<i class="fa-solid fa-check"></i>`;
+        setTimeout(() => copyTextButton.innerHTML = `<i class="fa-regular fa-clone"></i>`, 1500);
+      }).catch((error) => {
+        console.error('Failed to copy Markdown content:', error);
+      });
+    };
+    
+    // Append the copy button to the bot message
+    msg.appendChild(copyTextButton);
+    
     // Highlight and enhance code blocks
     msg.querySelectorAll('pre code').forEach((block) => {
       hljs.highlightBlock(block);
@@ -43,27 +70,27 @@ const addMessage = (content, sender) => {
       // Detect the language
       let detectedLang = block.className.match(/language-(\w+)/);
       let langLabel = detectedLang ? detectedLang[1] : "Code";
-
+      
       // Create a wrapper for styling
       let preWrapper = document.createElement('div');
       preWrapper.classList.add('code-wrapper');
-
+      
       // Create label
       let label = document.createElement('span');
       label.classList.add('code-lang');
       label.textContent = langLabel;
-
-      // Create copy button
+      
+      // Create copy button for code blocks
       let copyButton = document.createElement('button');
       copyButton.classList.add('copy-code-btn');
-      copyButton.innerHTML = `<i class="fa-regular fa-clone"></i> Copy`;
-
+      copyButton.innerHTML = `<i class="fa-regular fa-clone"></i> Copy code`;
+      
       copyButton.onclick = () => {
         navigator.clipboard.writeText(block.textContent);
         copyButton.innerHTML = `<i class="fa-solid fa-check"></i> Copied`;
-        setTimeout(() => copyButton.innerHTML = `<i class="fa-regular fa-clone"></i> Copy`, 1500);
+        setTimeout(() => copyButton.innerHTML = `<i class="fa-regular fa-clone"></i> Copy code`, 1500);
       };
-
+      
       // Wrap pre inside wrapper and append elements
       let preElement = block.parentElement;
       preElement.parentElement.replaceChild(preWrapper, preElement);
@@ -72,11 +99,10 @@ const addMessage = (content, sender) => {
       preWrapper.appendChild(preElement);
     });
   }
-
+  
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
-
 
 
 // Function to load chat history from local storage

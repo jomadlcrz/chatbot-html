@@ -202,7 +202,8 @@ textarea {
 }
 
 .user-message {
-    background: #f1f1f1;
+    background: #2f32f2;
+    color: #fff;
     margin-left: auto;
 }
 
@@ -230,7 +231,7 @@ textarea {
     background: #2f32f2;
     position: relative;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: 20px;
     max-width: 75%;
     word-wrap: break-word;
     color: #fff;
@@ -381,4 +382,32 @@ code {
 .copy-code-btn:focus,
 .copy-code-btn:active {
     outline: none;
+}
+
+.copy-text-btn {
+  background: transparent;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: 0.9em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  outline: none;          /* Remove default outline */
+  box-shadow: none;       /* Remove any shadow */
+}
+
+.copy-text-btn:focus {
+  outline: none;          /* Ensure no outline on focus */
+  box-shadow: none;       /* No shadow on focus */
+}
+
+.copy-text-btn i {
+  color: #888;
+  transition: color 0.3s;
+}
+
+.copy-text-btn:hover i {
+  color: #333;
 }
