@@ -43,7 +43,7 @@ body, html {
     background: linear-gradient(135deg, #2f32f2, #6a74f7);
     background-size: 200% 200%;
     animation: gradientAnimation 6s ease infinite;
-    color: white;
+    color: #fff;
     position: fixed;
     top: 0;
     left: 0;
@@ -328,7 +328,7 @@ textarea::placeholder {
     background: linear-gradient(135deg, #2f32f2, #6a74f7); /* Matching Gradient */
     position: relative;
     padding: 10px 16px;
-    border-radius: 20px;
+    border-radius: 14px;
     max-width: 75%;
     word-wrap: break-word;
     color: #fff;
@@ -492,8 +492,8 @@ pre code {
 
 /* Inline Code Styling */
 code {
-    background-color: #ccc;
-    color: black;
+    background-color: #6a74f7;
+    color: #fff;
     padding: 2px 5px;
     border-radius: 4px;
     font-family: "Courier New", Courier, monospace;

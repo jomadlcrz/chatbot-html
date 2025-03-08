@@ -46,23 +46,23 @@ const addMessage = (content, sender) => {
     
     // Handle copy event
     copyTextButton.onclick = () => {
-      let markdownToCopy = msg.dataset.markdownContent; // Retrieve original Markdown content
-  
-      navigator.clipboard.writeText(markdownToCopy).then(() => {
-          // Add tooltip behavior
-          copyTextButton.classList.add("copied");
-          copyTextButton.setAttribute("data-tooltip", "Copied!");
-  
-          // Reset tooltip after 1.5 seconds
-          setTimeout(() => {
-              copyTextButton.classList.remove("copied");
-              copyTextButton.setAttribute("data-tooltip", "Copy text");
-          }, 1500);
-      }).catch((error) => {
-          console.error("Failed to copy Markdown content:", error);
-      });
-  };
-    
+    let markdownToCopy = msg.dataset.markdownContent; // Retrieve original Markdown content
+
+    navigator.clipboard.writeText(markdownToCopy).then(() => {
+        // Add tooltip behavior
+        copyTextButton.classList.add("copied");
+        copyTextButton.setAttribute("data-tooltip", "Copied!");
+
+        // Reset tooltip after 1.5 seconds
+        setTimeout(() => {
+            copyTextButton.classList.remove("copied");
+            copyTextButton.setAttribute("data-tooltip", "Copy text");
+        }, 1500);
+    }).catch((error) => {
+        console.error("Failed to copy Markdown content:", error);
+    });
+};
+
     // Append the copy button to the bot message
     msg.appendChild(copyTextButton);
     
