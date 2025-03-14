@@ -7,43 +7,36 @@
 body, html {
     height: 100%;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2f32f2, #6a74f7, #b3b8ff);
-    background-size: 300% 300%;
-    animation: gradientAnimation 10s ease infinite;
 }
 
-/* Custom WebKit Scrollbar */
+/* Custom Scrollbar Styling */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #2f32f2, #6a74f7);
+    background-color: #2f32f2;
     border-radius: 10px;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1); /* Subtle transparency */
+    background-color: #ccc;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #2226a2, #4a50d1);
-    box-shadow: 0 0 10px rgba(106, 116, 247, 0.5); /* Soft glow */
+    background-color: #6A74F7;
 }
 
-/* Gradient Header */
+/* Fixed Header */
 .header {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 15px;
-    background: linear-gradient(135deg, #2f32f2, #6a74f7);
-    background-size: 200% 200%;
-    animation: gradientAnimation 6s ease infinite;
-    color: #fff;
+    background: #2f32f2;
+    color: white;
     position: fixed;
     top: 0;
     left: 0;
@@ -66,25 +59,17 @@ body, html {
     z-index: 1000;
 }
 
-/* Input Wrapper Matching the Background */
 .input-wrapper {
     display: flex;
     align-items: flex-end;
     border-radius: 20px;
-    background: linear-gradient(135deg, rgba(47, 50, 242, 0.8), rgba(106, 116, 247, 0.8));
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #f8f9fa;
     padding: 8px 12px;
+    border: 1px solid #ddd;
     position: relative;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Interactive effect on focus */
-.input-wrapper:focus-within {
-    background: linear-gradient(135deg, rgba(47, 50, 242, 0.9), rgba(106, 116, 247, 0.9));
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 textarea {
@@ -97,21 +82,13 @@ textarea {
     background: transparent;
     outline: none;
     padding-right: 40px;
-    color: #fff;
-}
-
-/* Placeholder Styling */
-textarea::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-    transition: color 0.3s ease;
 }
 
 .send-btn {
-    background: linear-gradient(135deg, #2f32f2, #6a74f7); /* Gradient */
+    background: #2f32f2;
     border: none;
-    color: #fff;
-    padding: 10px 16px; /* Slightly bigger for better tap */
+    color: white;
+    padding: 8px 14px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 16px;
@@ -119,27 +96,25 @@ textarea::placeholder {
     margin-top: 8px;
     position: relative;
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
     outline: none;
 }
-
-.send-btn:hover {
-    background: linear-gradient(135deg, #2226a2, #4a50d1); /* Darker hover */
-    transform: scale(1.1); /* Slight scale effect */
-}
-
-.send-btn:disabled {
-    background: linear-gradient(135deg, rgba(47, 50, 242, 0.5), rgba(106, 116, 247, 0.5));
-    color: rgba(255, 255, 255, 0.6);
-    cursor: not-allowed;
-    transform: none;
-}
-
 
 .send-btn:focus {
     outline: none;
 }
 
+.send-btn:hover {
+    background: #6A74F7;
+}
 
+.send-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
 
 @media (hover: hover) {
     .send-btn:not(:disabled)::after {
@@ -227,60 +202,22 @@ textarea::placeholder {
 }
 
 .user-message {
-    background: #6a74f7;
+    background: #2f32f2;
     color: #fff;
     margin-left: auto;
-    padding: 12px 16px;
-    border-radius: 14px; /* Adjusted for a slight square & round balance */
-    max-width: 75%;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    width: fit-content;
-    box-shadow: 0 2px 6px rgba(47, 50, 242, 0.2); /* Soft shadow for depth */
-}
-
-/* Add a subtle glowing effect when sending */
-@keyframes messageGlow {
-    0% {
-        box-shadow: 0 0 5px rgba(106, 116, 247, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 12px rgba(106, 116, 247, 0.6);
-    }
-    100% {
-        box-shadow: 0 0 5px rgba(106, 116, 247, 0.3);
-    }
-}
-
-.user-message.sending {
-    animation: messageGlow 1s ease-in-out infinite alternate;
-}
-
-
-/* Improve text selection styling */
-::selection {
-    background: #6a74f7; /* A softer blue to match your theme */
-    color: #fff; /* Ensures readability */
-}
-
-.user-message::selection,
-.bot-message::selection {
-    background: rgba(255, 255, 255, 0.3); /* Light overlay for user messages */
-    color: inherit; /* Keeps original text color */
 }
 
 .bot-message {
     background: none;
     margin-right: auto;
-    color: #fff;
 }
 
 .welcome-message {
-    color: #fff;
+    color: #2f32f2;
     border-radius: 8px;
     padding: 20px;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 26px;
     text-align: center;
     white-space: pre-wrap;
     position: absolute;
@@ -288,60 +225,23 @@ textarea::placeholder {
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 80%;
-    animation: fadeInScale 1.5s ease-in-out, glow 2s infinite alternate;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-/* Smooth Fade-in & Scale Animation */
-@keyframes fadeInScale {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -55%) scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-/* Improved Glowing Text Effect */
-@keyframes glow {
-    0% {
-        text-shadow: 0px 0px 5px rgba(255, 50, 100, 0.5), 
-                     0px 0px 10px rgba(255, 20, 60, 0.6), 
-                     0px 0px 15px rgba(255, 0, 50, 0.7);
-    }
-    50% {
-        text-shadow: 0px 0px 10px rgba(255, 100, 150, 0.7), 
-                     0px 0px 20px rgba(255, 50, 120, 0.8), 
-                     0px 0px 30px rgba(255, 0, 90, 0.9);
-    }
-    100% {
-        text-shadow: 0px 0px 15px rgba(255, 150, 200, 0.9), 
-                     0px 0px 25px rgba(255, 100, 180, 1), 
-                     0px 0px 35px rgba(255, 50, 150, 1);
-    }
 }
 
 .thinking-message {
-    background: linear-gradient(135deg, #2f32f2, #6a74f7); /* Matching Gradient */
+    background: #2f32f2;
     position: relative;
-    padding: 10px 16px;
-    border-radius: 14px;
+    padding: 10px;
+    border-radius: 20px;
     max-width: 75%;
     word-wrap: break-word;
     color: #fff;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     display: inline-block;
     overflow: hidden;
-    margin-right: auto;
-    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-/* WebKit: Add subtle shimmer effect to simulate "thinking" */
 .thinking-message::after {
     content: "";
     position: absolute;
@@ -349,39 +249,13 @@ textarea::placeholder {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: -webkit-linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    -webkit-animation: shimmer 1.5s infinite linear;
-    animation: shimmer 1.5s infinite linear;
-}
-
-/* WebKit: Shimmer animation */
-@-webkit-keyframes shimmer {
-    0% { left: -100%; }
-    100% { left: 100%; }
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 2s infinite linear;
 }
 
 @keyframes shimmer {
     0% { left: -100%; }
     100% { left: 100%; }
-}
-
-/* WebKit: Optional pulsing effect */
-@-webkit-keyframes pulse {
-    0% { -webkit-transform: scale(1); transform: scale(1); }
-    50% { -webkit-transform: scale(1.03); transform: scale(1.03); }
-    100% { -webkit-transform: scale(1); transform: scale(1); }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-    100% { transform: scale(1); }
-}
-
-.thinking-message.pulsing {
-    -webkit-animation: pulse 1.5s infinite ease-in-out;
-    animation: pulse 1.5s infinite ease-in-out;
 }
 
 /* Disclaimer Footer */
@@ -391,7 +265,7 @@ footer {
     width: 100%;
     text-align: center;
     font-size: 12px;
-    color: #fff;
+    color: #555;
 }
 
 footer p {
@@ -492,8 +366,8 @@ pre code {
 
 /* Inline Code Styling */
 code {
-    background-color: #6a74f7;
-    color: #fff;
+    background-color: #ccc;
+    color: black;
     padding: 2px 5px;
     border-radius: 4px;
     font-family: "Courier New", Courier, monospace;
@@ -529,36 +403,6 @@ code {
     border-radius: 3px;
     cursor: pointer;
 }
-/* Tooltip */
-.copy-code-btn::after {
-    content: "Copy code";
-    position: absolute;
-    bottom: 125%; /* Position above button */
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px 8px;
-    border-radius: 5px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
-    pointer-events: none;
-}
-
-/* Show tooltip on hover */
-.copy-code-btn:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-5px);
-}
-
-/* Change tooltip text after copying */
-.copy-code-btn.copied::after {
-    content: "Copied!";
-    opacity: 1;
-    transform: translateX(-50%) translateY(-5px);
-}
 
 .copy-code-btn:focus,
 .copy-code-btn:active {
@@ -568,7 +412,7 @@ code {
 .copy-text-btn {
     background: transparent;
     border: none;
-    color: #fff;
+    color: #555;
     cursor: pointer;
     margin-top: 5px;
     font-size: 0.9em;
@@ -577,45 +421,7 @@ code {
     gap: 5px;
     outline: none;          /* Remove default outline */
     box-shadow: none;       /* Remove any shadow */
-    /* Remove tap highlight on mobile */
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    user-select: none;
 }
-
-/* Tooltip for Copy Text Button */
-.copy-text-btn {
-    position: relative;
-}
-
-.copy-text-btn::after {
-    content: "Copy text";
-    position: absolute;
-    bottom: 125%; /* Position above button */
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px 8px;
-    border-radius: 5px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
-    pointer-events: none;
-}
-
-.copy-text-btn:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-5px);
-}
-
-.copy-text-btn.copied::after {
-    content: "Copied!";
-    opacity: 1;
-    transform: translateX(-50%) translateY(-5px);
-}
-
 
 .copy-text-btn:focus {
     outline: none;          /* Ensure no outline on focus */
@@ -623,10 +429,22 @@ code {
     }
 
 .copy-text-btn i {
-    color: #fff;
+    color: #888;
     transition: color 0.3s;
     }
 
 .copy-text-btn:hover i {
-    color: #fff;
+    color: #333;
+}
+
+/* Improve text selection styling */
+::selection {
+    background: #6a74f7; /* A softer blue to match your theme */
+    color: #fff; /* Ensures readability */
+}
+
+.user-message::selection,
+.bot-message::selection {
+    background: rgba(255, 255, 255, 0.3); /* Light overlay for user messages */
+    color: inherit; /* Keeps original text color */
 }
