@@ -196,7 +196,7 @@ textarea {
 }
 
 @media (max-width: 600px) {
-    .message {
+    .bot-message {
         max-width: 90vw;
     }
 }
